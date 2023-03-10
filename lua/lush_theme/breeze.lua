@@ -50,6 +50,17 @@ local hsl = lush.hsl
 ---@diagnostic disable: undefined-global
 local theme = lush(function(injected_functions)
   local sym = injected_functions.sym
+
+  local comment = hsl("#2CC02C")
+  local strings = hsl("#E5D48B")
+  local numbers = hsl("#FF80AB")
+  local keyword = hsl("#90CAF9")
+  local default_library = hsl("#29B6F6")
+  local interface = hsl("#00B8D4")
+  local parameters = hsl("#BDBDBD")
+  local background = hsl("#1c2026")
+  local foreground = hsl("#f1f1f1")
+
   return {
     -- The following are the Neovim (as of 0.8.0-dev+100-g371dfb174) highlight
     -- groups, mostly used for styling UI elements.
@@ -61,41 +72,77 @@ local theme = lush(function(injected_functions)
     --
     -- See :h highlight-groups
     --
+    Normal { bg = background, fg = foreground }, -- Normal text
+    NormalFloat { Normal }, -- Normal text in floating windows.
+
+    CursorColumn { bg = background.lighten(8) }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
+    CursorLine { CursorColumn }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
+
+
+    NvimTreeSymlink { Normal },
+    NvimTreeFolderName { Normal },
+    NvimTreeRootFolder { Normal },
+    NvimTreeFolderIcon { Normal },
+    NvimTreeOpenedFolderIcon { Normal },
+    NvimTreeClosedFolderIcon { Normal },
+    NvimTreeFileIcon { Normal },
+    NvimTreeEmptyFolderName { Normal },
+    NvimTreeOpenedFolderName { Normal },
+    NvimTreeExecFile { Normal },
+    NvimTreeOpenedFile { Normal },
+    NvimTreeModifiedFile { Normal },
+    NvimTreeSpecialFile { Normal },
+    NvimTreeImageFile { Normal },
+    NvimTreeIndentMarker { Normal },
+
+    NvimTreeLspDiagnosticsError { Normal },
+    NvimTreeLspDiagnosticsWarning { Normal },
+    NvimTreeLspDiagnosticsInformation { Normal },
+    NvimTreeLspDiagnosticsHint { Normal },
+
+    NvimTreeGitDirty { Normal },
+    NvimTreeGitStaged { Normal },
+    NvimTreeGitMerge { Normal },
+    NvimTreeGitRenamed { Normal },
+    NvimTreeGitNew { Normal },
+    NvimTreeGitDeleted { Normal },
+    NvimTreeGitIgnored { Normal },
+
+    NvimTreeWindowPicker { Normal },
+
+    NvimTreeWindowPicker {},
     -- ColorColumn  { }, -- Columns set with 'colorcolumn'
-    -- Conceal      { }, -- Placeholder characters substituted for concealed text (see 'conceallevel')
+    -- Conceal      { bg = background.darken(17)}, -- Placeholder characters substituted for concealed text (see 'conceallevel')
     -- Cursor       { }, -- Character under the cursor
     -- lCursor      { }, -- Character under the cursor when |language-mapping| is used (see 'guicursor')
     -- CursorIM     { }, -- Like Cursor, but used when in IME mode |CursorIM|
-    -- CursorColumn { }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
-    -- CursorLine   { }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
     -- Directory    { }, -- Directory names (and other special names in listings)
-    -- DiffAdd      { }, -- Diff mode: Added line |diff.txt|
-    -- DiffChange   { }, -- Diff mode: Changed line |diff.txt|
-    -- DiffDelete   { }, -- Diff mode: Deleted line |diff.txt|
+    DiffAdd { bg = comment }, -- Diff mode: Added line |diff.txt|
+    DiffChange { bg = default_library }, -- Diff mode: Changed line |diff.txt|
+    DiffDelete { bg = hsl("#c82829") }, -- Diff mode: Deleted line |diff.txt|
     -- DiffText     { }, -- Diff mode: Changed text within a changed line |diff.txt|
-    -- EndOfBuffer  { }, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
+    NvimTreeGitDirty { fg = DiffChange.bg },
+    EndOfBuffer {}, -- Filler lines (~) after the end of the buffer. By default, this is highlighted like |hl-NonText|.
     -- TermCursor   { }, -- Cursor in a focused terminal
     -- TermCursorNC { }, -- Cursor in an unfocused terminal
     -- ErrorMsg     { }, -- Error messages on the command line
     -- VertSplit    { }, -- Column separating vertically split windows
-    -- Folded       { }, -- Line used for closed folds
-    -- FoldColumn   { }, -- 'foldcolumn'
-    -- SignColumn   { }, -- Column where |signs| are displayed
+    Folded {}, -- Line used for closed folds
+    FoldColumn {}, -- 'foldcolumn'
+    SignColumn {}, -- Column where |signs| are displayed
     -- IncSearch    { }, -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
     -- Substitute   { }, -- |:substitute| replacement text highlighting
-    -- LineNr       { }, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
-    -- CursorLineNr { }, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
+    LineNr {}, -- Line number for ":number" and ":#" commands, and when 'number' or 'relativenumber' option is set.
+    CursorLineNr {}, -- Like LineNr when 'cursorline' or 'relativenumber' is set for the cursor line.
     -- MatchParen   { }, -- Character under the cursor or just before it, if it is a paired bracket, and its match. |pi_paren.txt|
     -- ModeMsg      { }, -- 'showmode' message (e.g., "-- INSERT -- ")
     -- MsgArea      { }, -- Area for messages and cmdline
     -- MsgSeparator { }, -- Separator for scrolled messages, `msgsep` flag of 'display'
     -- MoreMsg      { }, -- |more-prompt|
-    -- NonText      { }, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
-    -- Normal       { }, -- Normal text
-    -- NormalFloat  { }, -- Normal text in floating windows.
+    NonTex {}, -- '@' at the end of the window, characters from 'showbreak' and other characters that do not really exist in the text (e.g., ">" displayed when a double-wide character doesn't fit at the end of the line). See also |hl-EndOfBuffer|.
     -- NormalNC     { }, -- normal text in non-current windows
-    -- Pmenu        { }, -- Popup menu: Normal item.
-    -- PmenuSel     { }, -- Popup menu: Selected item.
+    Pmenu { Normal }, -- Popup menu: Normal item.
+    PmenuSel { CursorLine }, -- Popup menu: Selected item.
     -- PmenuSbar    { }, -- Popup menu: Scrollbar.
     -- PmenuThumb   { }, -- Popup menu: Thumb of the scrollbar.
     -- Question     { }, -- |hit-enter| prompt and yes/no questions
@@ -112,10 +159,10 @@ local theme = lush(function(injected_functions)
     -- TabLineFill  { }, -- Tab pages line, where there are no labels
     -- TabLineSel   { }, -- Tab pages line, active tab page label
     -- Title        { }, -- Titles for output from ":set all", ":autocmd" etc.
-    -- Visual       { }, -- Visual mode selection
+    Visual { bg = Normal.bg.lighten(25) }, -- Visual mode selection
     -- VisualNOS    { }, -- Visual mode selection when vim is "Not Owning the Selection".
     -- WarningMsg   { }, -- Warning messages
-    -- Whitespace   { }, -- "nbsp", "space", "tab" and "trail" in 'listchars'
+    Whitespace {}, -- "nbsp", "space", "tab" and "trail" in 'listchars'
     -- Winseparator { }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
     -- WildMenu     { }, -- Current match in 'wildmenu' completion
 
@@ -127,39 +174,39 @@ local theme = lush(function(injected_functions)
     --
     -- Uncomment and edit if you want more specific syntax highlighting.
 
-    -- Comment        { }, -- Any comment
+    Comment { fg = comment }, -- Any comment
 
-    -- Constant       { }, -- (*) Any constant
-    -- String         { }, --   A string constant: "this is a string"
-    -- Character      { }, --   A character constant: 'c', '\n'
-    -- Number         { }, --   A number constant: 234, 0xff
-    -- Boolean        { }, --   A boolean constant: TRUE, false
-    -- Float          { }, --   A floating point constant: 2.3e10
+    Constant { fg = foreground }, -- (*) Any constant
+    String { fg = strings }, --   A string constant: "this is a string"
+    Character { String }, --   A character constant: 'c', '\n'
+    Number { fg = numbers }, --   A number constant: 234, 0xff
+    Boolean { fg = keyword }, --   A boolean constant: TRUE, false
+    Float { Number }, --   A floating point constant: 2.3e10
 
-    -- Identifier     { }, -- (*) Any variable name
-    -- Function       { }, --   Function name (also: methods for classes)
+    Identifier {}, -- (*) Any variable name
+    Function {}, --   Function name (also: methods for classes)
 
-    -- Statement      { }, -- (*) Any statement
-    -- Conditional    { }, --   if, then, else, endif, switch, etc.
+    Statement {}, -- (*) Any statement
+    Conditional { fg = keyword }, --   if, then, else, endif, switch, etc.
     -- Repeat         { }, --   for, do, while, etc.
     -- Label          { }, --   case, default, etc.
-    -- Operator       { }, --   "sizeof", "+", "*", etc.
-    -- Keyword        { }, --   any other keyword
+    Operator {}, --   "sizeof", "+", "*", etc.
+    Keyword { fg = default_library }, --   any other keyword
     -- Exception      { }, --   try, catch, throw
 
-    -- PreProc        { }, -- (*) Generic Preprocessor
-    -- Include        { }, --   Preprocessor #include
-    -- Define         { }, --   Preprocessor #define
-    -- Macro          { }, --   Same as Define
-    -- PreCondit      { }, --   Preprocessor #if, #else, #endif, etc.
+    PreProc {}, -- (*) Generic Preprocessor
+    Include {}, --   Preprocessor #include
+    Define {}, --   Preprocessor #define
+    Macro {}, --   Same as Define
+    PreCondit {}, --   Preprocessor #if, #else, #endif, etc.
 
-    -- Type           { }, -- (*) int, long, char, etc.
-    -- StorageClass   { }, --   static, register, volatile, etc.
+    Type { fg = interface }, -- (*) int, long, char, etc.
+    StorageClass { Keyword }, --   static, register, volatile, etc.
     -- Structure      { }, --   struct, union, enum, etc.
     -- Typedef        { }, --   A typedef
 
-    -- Special        { }, -- (*) Any special symbol
-    -- SpecialChar    { }, --   Special character in a constant
+    Special {}, -- (*) Any special symbol
+    SpecialChar {}, --   Special character in a constant
     -- Tag            { }, --   You can use CTRL-] on this
     -- Delimiter      { }, --   Character that needs attention
     -- SpecialComment { }, --   Special things inside a comment (e.g. '\n')
@@ -232,7 +279,7 @@ local theme = lush(function(injected_functions)
     -- sym"@comment"           { }, -- Comment
     -- sym"@punctuation"       { }, -- Delimiter
     -- sym"@constant"          { }, -- Constant
-    -- sym"@constant.builtin"  { }, -- Special
+    sym "@constant.builtin" { fg = default_library }, -- Special
     -- sym"@constant.macro"    { }, -- Define
     -- sym"@define"            { }, -- Define
     -- sym"@macro"             { }, -- Macro
@@ -244,13 +291,13 @@ local theme = lush(function(injected_functions)
     -- sym"@number"            { }, -- Number
     -- sym"@boolean"           { }, -- Boolean
     -- sym"@float"             { }, -- Float
-    -- sym"@function"          { }, -- Function
-    -- sym"@function.builtin"  { }, -- Special
+    sym "@function" { Function }, -- Function
+    sym "@function.builtin" { Keyword }, -- Special
     -- sym"@function.macro"    { }, -- Macro
-    -- sym"@parameter"         { }, -- Identifier
-    -- sym"@method"            { }, -- Function
-    -- sym"@field"             { }, -- Identifier
-    -- sym"@property"          { }, -- Identifier
+    sym "@parameter" { fg = parameters, gui = "italic" }, -- Identifiegr
+    sym "@method" { fg = parameters }, -- Function
+    sym "@field" { fg = parameters }, -- Identifier
+    sym "@property" { fg = parameters }, -- Identifier
     -- sym"@constructor"       { }, -- Special
     -- sym"@conditional"       { }, -- Conditional
     -- sym"@repeat"            { }, -- Repeat
@@ -268,8 +315,10 @@ local theme = lush(function(injected_functions)
     -- sym"@preproc"           { }, -- PreProc
     -- sym"@debug"             { }, -- Debug
     -- sym"@tag"               { }, -- Tag
-}
+  }
 end)
+
+-- g.terminal_color_1 = theme.Normal.fg.hex
 
 -- Return our parsed theme for extension or use elsewhere.
 return theme
