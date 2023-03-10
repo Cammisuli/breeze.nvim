@@ -55,6 +55,7 @@ local theme = lush(function(injected_functions)
   local strings = hsl("#E5D48B")
   local numbers = hsl("#FF80AB")
   local keyword = hsl("#90CAF9")
+  local constant = hsl("#9289fe")
   local default_library = hsl("#29B6F6")
   local interface = hsl("#00B8D4")
   local parameters = hsl("#BDBDBD")
@@ -176,17 +177,17 @@ local theme = lush(function(injected_functions)
 
     Comment { fg = comment }, -- Any comment
 
-    Constant { fg = foreground }, -- (*) Any constant
+    Constant { fg = constant }, -- (*) Any constant
     String { fg = strings }, --   A string constant: "this is a string"
     Character { String }, --   A character constant: 'c', '\n'
     Number { fg = numbers }, --   A number constant: 234, 0xff
     Boolean { fg = keyword }, --   A boolean constant: TRUE, false
     Float { Number }, --   A floating point constant: 2.3e10
 
-    Identifier {}, -- (*) Any variable name
+    Identifier {}, -- (*) Any variable nam--[[ e ]]
     Function {}, --   Function name (also: methods for classes)
 
-    Statement {}, -- (*) Any statement
+    Statement { fg = keyword }, -- (*) Any statement
     Conditional { fg = keyword }, --   if, then, else, endif, switch, etc.
     -- Repeat         { }, --   for, do, while, etc.
     -- Label          { }, --   case, default, etc.
@@ -296,6 +297,7 @@ local theme = lush(function(injected_functions)
     -- sym"@function.macro"    { }, -- Macro
     sym "@parameter" { fg = parameters, gui = "italic" }, -- Identifiegr
     sym "@method" { fg = parameters }, -- Function
+    sym "@method.call" { fg = hsl("#00BFA5") },
     sym "@field" { fg = parameters }, -- Identifier
     sym "@property" { fg = parameters }, -- Identifier
     -- sym"@constructor"       { }, -- Special
@@ -311,7 +313,7 @@ local theme = lush(function(injected_functions)
     -- sym"@storageclass"      { }, -- StorageClass
     -- sym"@structure"         { }, -- Structure
     -- sym"@namespace"         { }, -- Identifier
-    -- sym"@include"           { }, -- Include
+    sym"@include"           { fg = keyword }, -- Include
     -- sym"@preproc"           { }, -- PreProc
     -- sym"@debug"             { }, -- Debug
     -- sym"@tag"               { }, -- Tag
