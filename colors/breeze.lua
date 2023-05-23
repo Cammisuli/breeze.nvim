@@ -1,5 +1,4 @@
 -- You probably always want to set this in your vim file
-vim.opt.background = 'dark'
 vim.g.colors_name = 'breeze'
 
 -- By setting our module to nil, we clear lua's cache,

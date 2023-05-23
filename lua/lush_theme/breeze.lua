@@ -60,7 +60,7 @@ local theme = lush(function(injected_functions)
   local interface = hsl("#00B8D4")
   local parameters = hsl("#BDBDBD")
   local background = hsl("#1c2026")
-  local foreground = hsl("#f1f1f1")
+  local foreground = hsl("#DEDEDE")
 
   return {
     -- The following are the Neovim (as of 0.8.0-dev+100-g371dfb174) highlight
@@ -206,7 +206,7 @@ local theme = lush(function(injected_functions)
     -- Structure      { }, --   struct, union, enum, etc.
     -- Typedef        { }, --   A typedef
 
-    Special {}, -- (*) Any special symbol
+    Special { fg = parameters }, -- (*) Any special symbol
     SpecialChar {}, --   Special character in a constant
     -- Tag            { }, --   You can use CTRL-] on this
     -- Delimiter      { }, --   Character that needs attention
