@@ -79,6 +79,7 @@ local theme = lush(function(injected_functions)
     CursorColumn { bg = background.lighten(8) }, -- Screen-column at the cursor, when 'cursorcolumn' is set.
     CursorLine { CursorColumn }, -- Screen-line at the cursor, when 'cursorline' is set. Low-priority if foreground (ctermfg OR guifg) is not set.
 
+    FloatBorder { fg = foreground },
 
     NvimTreeSymlink { Normal },
     NvimTreeFolderName { Normal },
@@ -127,7 +128,7 @@ local theme = lush(function(injected_functions)
     -- TermCursor   { }, -- Cursor in a focused terminal
     -- TermCursorNC { }, -- Cursor in an unfocused terminal
     -- ErrorMsg     { }, -- Error messages on the command line
-    -- VertSplit    { }, -- Column separating vertically split windows
+    VertSplit { fg = foreground }, -- Column separating vertically split windows
     Folded {}, -- Line used for closed folds
     FoldColumn {}, -- 'foldcolumn'
     SignColumn {}, -- Column where |signs| are displayed
@@ -164,7 +165,7 @@ local theme = lush(function(injected_functions)
     -- VisualNOS    { }, -- Visual mode selection when vim is "Not Owning the Selection".
     -- WarningMsg   { }, -- Warning messages
     Whitespace {}, -- "nbsp", "space", "tab" and "trail" in 'listchars'
-    -- Winseparator { }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
+    Winseparator { fg = foreground }, -- Separator between window splits. Inherts from |hl-VertSplit| by default, which it will replace eventually.
     -- WildMenu     { }, -- Current match in 'wildmenu' completion
 
     -- Common vim syntax groups used for all kinds of code and markup.
@@ -313,7 +314,7 @@ local theme = lush(function(injected_functions)
     -- sym"@storageclass"      { }, -- StorageClass
     -- sym"@structure"         { }, -- Structure
     -- sym"@namespace"         { }, -- Identifier
-    sym"@include"           { fg = keyword }, -- Include
+    sym "@include" { fg = keyword }, -- Include
     -- sym"@preproc"           { }, -- PreProc
     -- sym"@debug"             { }, -- Debug
     -- sym"@tag"               { }, -- Tag
